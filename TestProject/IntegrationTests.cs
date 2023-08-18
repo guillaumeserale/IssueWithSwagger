@@ -1,28 +1,32 @@
 using Alba;
 using FluentAssertions;
-using IssueWithSwagger;
 using IssueWithSwagger.Features;
-
 
 namespace TestProject
 {
-    public class IntegrationTests
+    public class IntegrationTests : IClassFixture<WebFixture>
     {
+        private readonly IAlbaHost host;
+
+        public IntegrationTests(WebFixture fixture)
+        {
+            host = fixture.Host;
+        }
+
         [Fact]
         public async Task Test1()
         {
             var request = new SampleRequest
             {
                 Field1 = "Test",
-                Field2 = "Test"                
+                Field2 = "Test"
 
             };
 
-            await using var host = await AlbaHost.For<Program>();
             var response = await host.Scenario(_ =>
             {
                 _.WithRequestHeader("Accept", "application/*");
-                
+
                 _.Get.Url("/Sample").QueryString<SampleRequest>(request);
                 _.StatusCodeShouldBeOk();
             });
@@ -39,15 +43,14 @@ namespace TestProject
             {
                 Field1 = "Test",
                 Field2 = "Test",
-                
+
 
             };
 
-            await using var host = await AlbaHost.For<Program>();
             var response = await host.Scenario(_ =>
             {
                 _.WithRequestHeader("Accept", "application/*");
-                
+
                 _.Get.Url("/Sample").QueryString<SampleRequest>(request);
                 _.StatusCodeShouldBeOk();
             });
@@ -63,15 +66,14 @@ namespace TestProject
             {
                 Field1 = "Test",
                 Field2 = "Test",
-                
+
 
             };
 
-            await using var host = await AlbaHost.For<Program>();
             var response = await host.Scenario(_ =>
             {
                 _.WithRequestHeader("Accept", "application/*");
-                
+
                 _.Get.Url("/Sample").QueryString<SampleRequest>(request);
                 _.StatusCodeShouldBeOk();
             });
@@ -87,15 +89,14 @@ namespace TestProject
             {
                 Field1 = "Test",
                 Field2 = "Test",
-                
+
 
             };
 
-            await using var host = await AlbaHost.For<Program>();
             var response = await host.Scenario(_ =>
             {
                 _.WithRequestHeader("Accept", "application/*");
-                
+
                 _.Get.Url("/Sample").QueryString<SampleRequest>(request);
                 _.StatusCodeShouldBeOk();
             });
