@@ -1,5 +1,5 @@
-using FastEndpoints.Swagger;
 using FastEndpoints;
+using FastEndpoints.Swagger;
 
 namespace IssueWithSwagger
 {
@@ -9,12 +9,13 @@ namespace IssueWithSwagger
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddFastEndpoints();
-            builder.Services.AddProblemDetails();
+            builder.Services.AddProblemDetails(); //note: this is not from FE
             builder.Services.SwaggerDocument();
             var app = builder.Build();
 
             app.UseAuthorization();
-            app.UseFastEndpoints(options => {
+            app.UseFastEndpoints(options =>
+            {
                 options.Errors.UseProblemDetails();
             });
             app.UseSwaggerGen();
